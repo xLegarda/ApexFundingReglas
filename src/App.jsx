@@ -627,7 +627,7 @@ const Apex100KRules = () => {
         {/* Header */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Reglas Apex Trading - Guía Completa
+            Reglas Apex Trader Funding - Guía Completa
           </h1>
           <p className="text-gray-600 mb-4">Selecciona tu tipo de cuenta y explora las 3 fases</p>
           
@@ -843,3 +843,4 @@ const Apex100KRules = () => {
 
 
 export default Apex100KRules;
+
