@@ -98,7 +98,7 @@ const Apex100KRules = () => {
       safetyNet: 102600,
       minPayout: 500,
       maxPayoutFirst5: 1000,
-      profitGoal: 6000,
+      profitGoal: 2000,
       monthlyFee: 137,
       type: 'STATIC'
     }
@@ -840,5 +840,6 @@ const Apex100KRules = () => {
     </div>
   );
 };
+
 
 export default Apex100KRules;
