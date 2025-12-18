@@ -114,7 +114,7 @@ const Apex100KRules = () => {
   const evaluationRules = useMemo(() => [
     {
       id: 'eval-trailing',
-      title: '📉 Trailing Drawdown',
+      title: '?? Trailing Drawdown',
       icon: <Shield className="w-6 h-6" />,
       color: 'bg-blue-500',
       summary: `${account.type === 'STATIC' ? 'Drawdown fijo' : 'Drawdown móvil'} - Regla principal en Evaluación`,
@@ -132,19 +132,19 @@ const Apex100KRules = () => {
         monitoring: 'Monitorea constantemente en RTrader/Tradovate dashboard'
       },
       examples: account.type === 'STATIC' ? [
-        `✅ Balance $${account.size.toLocaleString()} → Drawdown FIJO en $${(account.size - account.drawdown).toLocaleString()}`,
-        `✅ Balance sube a $${(account.size + 2000).toLocaleString()} → Drawdown sigue en $${(account.size - account.drawdown).toLocaleString()}`,
-        `❌ Balance toca $${(account.size - account.drawdown).toLocaleString()} = Cuenta liquidada`
+        `? Balance $${account.size.toLocaleString()} ? Drawdown FIJO en $${(account.size - account.drawdown).toLocaleString()}`,
+        `? Balance sube a $${(account.size + 2000).toLocaleString()} ? Drawdown sigue en $${(account.size - account.drawdown).toLocaleString()}`,
+        `? Balance toca $${(account.size - account.drawdown).toLocaleString()} = Cuenta liquidada`
       ] : [
-        `✅ Balance $${account.size.toLocaleString()} → Trailing en $${trailingStart.toLocaleString()}`,
-        `✅ Trade peak $${(account.size + 2000).toLocaleString()}, cierras en $${(account.size + 1500).toLocaleString()} → Trailing en $${(account.size + 2000 - account.drawdown).toLocaleString()} (sigue el peak)`,
-        `✅ Balance llega a $${account.safetyNet.toLocaleString()}+ → Trailing se fija permanentemente en $${(account.size + 100).toLocaleString()}`,
-        `❌ Balance toca el trailing = Cuenta liquidada inmediatamente`
+        `? Balance $${account.size.toLocaleString()} ? Trailing en $${trailingStart.toLocaleString()}`,
+        `? Trade peak $${(account.size + 2000).toLocaleString()}, cierras en $${(account.size + 1500).toLocaleString()} ? Trailing en $${(account.size + 2000 - account.drawdown).toLocaleString()} (sigue el peak)`,
+        `? Balance llega a $${account.safetyNet.toLocaleString()}+ ? Trailing se fija permanentemente en $${(account.size + 100).toLocaleString()}`,
+        `? Balance toca el trailing = Cuenta liquidada inmediatamente`
       ]
     },
     {
       id: 'eval-days',
-      title: '📅 Días Mínimos de Trading',
+      title: '?? Días Mínimos de Trading',
       icon: <Calendar className="w-6 h-6" />,
       color: 'bg-indigo-500',
       summary: '7 días de trading para pasar evaluación',
@@ -155,15 +155,15 @@ const Apex100KRules = () => {
         maintain: 'Si alcanzas el objetivo antes de los 7 días, mantén el balance arriba hasta completar los días'
       },
       examples: [
-        `✅ 7 días trading + $${account.profitGoal.toLocaleString()} profit = Pasas evaluación`,
-        '✅ Puedes tomar días libres - no tienen que ser consecutivos',
-        '❌ Solo 6 días de trading = No pasas aunque tengas profit',
-        `⚠️ Alcanzas $${account.profitGoal.toLocaleString()} en día 4 → Sigue trading hasta completar 7 días`
+        `? 7 días trading + $${account.profitGoal.toLocaleString()} profit = Pasas evaluación`,
+        '? Puedes tomar días libres - no tienen que ser consecutivos',
+        '? Solo 6 días de trading = No pasas aunque tengas profit',
+        `?? Alcanzas $${account.profitGoal.toLocaleString()} en día 4 ? Sigue trading hasta completar 7 días`
       ]
     },
     {
       id: 'eval-close-time',
-      title: '⏰ Cierre de Operaciones',
+      title: '? Cierre de Operaciones',
       icon: <AlertCircle className="w-6 h-6" />,
       color: 'bg-red-500',
       summary: 'Todas las operaciones deben cerrarse antes de 4:59 PM ET',
@@ -175,15 +175,15 @@ const Apex100KRules = () => {
         holidays: 'En días festivos con cierre temprano, cierra a la hora correspondiente del mercado'
       },
       examples: [
-        '✅ Cierras todas las posiciones a las 4:30 PM ET',
-        '❌ Confiar en el auto-close como estrategia principal',
-        '❌ Dejar órdenes pendientes sin attached position',
-        '⚠️ Día festivo con cierre 1:00 PM → Cierra a esa hora'
+        '? Cierras todas las posiciones a las 4:30 PM ET',
+        '? Confiar en el auto-close como estrategia principal',
+        '? Dejar órdenes pendientes sin attached position',
+        '?? Día festivo con cierre 1:00 PM ? Cierra a esa hora'
       ]
     },
     {
       id: 'eval-holidays',
-      title: '🎄 Trading en Días Festivos',
+      title: '?? Trading en Días Festivos',
       icon: <Calendar className="w-6 h-6" />,
       color: 'bg-purple-500',
       summary: 'Puedes tradear festivos pero half-days no cuentan',
@@ -194,15 +194,15 @@ const Apex100KRules = () => {
         sundays: 'Trading los domingos cuenta como parte del lunes (6:00 PM domingo - 4:59 PM lunes)'
       },
       examples: [
-        '✅ Festivo mercado abierto full → Cuenta como 1 día',
-        '❌ Half-day holiday → No cuenta separado',
-        '💡 Domingo 8:00 PM trading → Cuenta como lunes',
-        '💡 Día de trading = 6:00 PM ET un día hasta 4:59 PM ET siguiente día'
+        '? Festivo mercado abierto full ? Cuenta como 1 día',
+        '? Half-day holiday ? No cuenta separado',
+        '?? Domingo 8:00 PM trading ? Cuenta como lunes',
+        '?? Día de trading = 6:00 PM ET un día hasta 4:59 PM ET siguiente día'
       ]
     },
     {
       id: 'eval-freedom',
-      title: '🎯 Sin Reglas de Consistencia',
+      title: '?? Sin Reglas de Consistencia',
       icon: <CheckCircle className="w-6 h-6" />,
       color: 'bg-green-500',
       summary: 'Libertad total para alcanzar objetivos',
@@ -216,7 +216,7 @@ const Apex100KRules = () => {
     },
     {
       id: 'eval-profit-goal',
-      title: '🎯 Objetivo de Profit',
+      title: '?? Objetivo de Profit',
       icon: <DollarSign className="w-6 h-6" />,
       color: 'bg-green-600',
       summary: `$${account.profitGoal.toLocaleString()} profit neto (después de comisiones)`,
@@ -227,9 +227,9 @@ const Apex100KRules = () => {
         maintain: 'Una vez alcanzado, mantén el balance arriba hasta completar 7 días'
       },
       examples: [
-        `✅ Balance $${(account.size + account.profitGoal).toLocaleString()}+ = $${account.profitGoal.toLocaleString()} profit alcanzado`,
-        '💡 Comisiones ya están descontadas del balance mostrado',
-        `⚠️ Si llegas a $${(account.size + account.profitGoal).toLocaleString()} en día 5, mantente arriba 2 días más`
+        `? Balance $${(account.size + account.profitGoal).toLocaleString()}+ = $${account.profitGoal.toLocaleString()} profit alcanzado`,
+        '?? Comisiones ya están descontadas del balance mostrado',
+        `?? Si llegas a $${(account.size + account.profitGoal).toLocaleString()} en día 5, mantente arriba 2 días más`
       ]
     }
   ], [selectedAccount, account]);
@@ -237,7 +237,7 @@ const Apex100KRules = () => {
   const paRules = useMemo(() => [
     {
       id: 'trading-days',
-      title: '📅 Días de Trading Requeridos',
+      title: '?? Días de Trading Requeridos',
       icon: <Calendar className="w-6 h-6" />,
       color: 'bg-indigo-500',
       summary: 'Requisitos de días antes de solicitar payout',
@@ -248,15 +248,15 @@ const Apex100KRules = () => {
         cycle: 'Después de cada payout aprobado, necesitas otros 8 días para el siguiente'
       },
       examples: [
-        '✅ 8 días trading, 5 con +$50 profit = Elegible',
-        '✅ 10 días trading, 6 con +$50 profit = Elegible',
-        '❌ 8 días pero solo 4 con +$50 = NO elegible',
-        '❌ Solo 6 días de trading = Solicitud NO verificada'
+        '? 8 días trading, 5 con +$50 profit = Elegible',
+        '? 10 días trading, 6 con +$50 profit = Elegible',
+        '? 8 días pero solo 4 con +$50 = NO elegible',
+        '? Solo 6 días de trading = Solicitud NO verificada'
       ]
     },
     {
       id: 'contract-scaling',
-      title: '📊 Escalado de Contratos',
+      title: '?? Escalado de Contratos',
       icon: <TrendingUp className="w-6 h-6" />,
       color: 'bg-blue-500',
       summary: account.type === 'STATIC' 
@@ -274,25 +274,25 @@ const Apex100KRules = () => {
         penalty: 'Violar esta regla = Payout denegado + Reset a balance del día anterior'
       },
       examples: account.type === 'STATIC' ? [
-        `✅ Balance: $${account.size.toLocaleString()} → Espera llegar a safety net`,
-        `✅ Balance EOD: $${account.safetyNet.toLocaleString()}+ → Desbloqueado ${account.maxContracts} contratos`
+        `? Balance: $${account.size.toLocaleString()} ? Espera llegar a safety net`,
+        `? Balance EOD: $${account.safetyNet.toLocaleString()}+ ? Desbloqueado ${account.maxContracts} contratos`
       ] : [
-        `✅ Balance: $${account.size.toLocaleString()} → Máximo ${halfContracts} contratos`,
-        `✅ Balance EOD: $${account.safetyNet.toLocaleString()}+ → Desbloqueado ${account.maxContracts} contratos`,
-        `❌ Usar ${halfContracts + 2} contratos antes de $${account.safetyNet.toLocaleString()}`,
-        '❌ No cerrar exceso inmediatamente = Penalización'
+        `? Balance: $${account.size.toLocaleString()} ? Máximo ${halfContracts} contratos`,
+        `? Balance EOD: $${account.safetyNet.toLocaleString()}+ ? Desbloqueado ${account.maxContracts} contratos`,
+        `? Usar ${halfContracts + 2} contratos antes de $${account.safetyNet.toLocaleString()}`,
+        '? No cerrar exceso inmediatamente = Penalización'
       ]
     },
     {
       id: 'negative-pnl',
-      title: '⚠️ Regla 30% P&L Negativo (MAE)',
+      title: '?? Regla 30% P&L Negativo (MAE)',
       icon: <Shield className="w-6 h-6" />,
       color: 'bg-red-500',
       summary: 'Pérdida máxima por operación: 30% del profit',
       details: account.type === 'STATIC' ? {
         belowSafetyNet: `Debajo de $${account.safetyNet.toLocaleString()}: Máx pérdida $${Math.round(account.drawdown * 0.3)} (30% de $${account.drawdown})`,
         aboveSafetyNet: 'Arriba del Safety Net: 30% del profit actual en la cuenta',
-        example: `Balance $${(account.size + 3000).toLocaleString()} (profit $3,000) → Máx pérdida: $900 (30%)`,
+        example: `Balance $${(account.size + 3000).toLocaleString()} (profit $3,000) ? Máx pérdida: $900 (30%)`,
         perTrade: 'Límite es POR OPERACIÓN, no pérdida diaria total'
       } : {
         perTrade: 'Límite es POR OPERACIÓN, no pérdida diaria total',
@@ -303,40 +303,40 @@ const Apex100KRules = () => {
         temporary: 'Excesos temporales corregidos rápido no generan penalización automática'
       },
       examples: account.type === 'STATIC' ? [
-        `✅ Balance $${account.size.toLocaleString()} → Máx pérdida: $${Math.round(account.drawdown * 0.3)}`,
-        `✅ Balance $${(account.size + 3000).toLocaleString()} (profit $3K) → Máx pérdida: $900`,
-        '❌ Permitir que UNA operación baje más del límite'
+        `? Balance $${account.size.toLocaleString()} ? Máx pérdida: $${Math.round(account.drawdown * 0.3)}`,
+        `? Balance $${(account.size + 3000).toLocaleString()} (profit $3K) ? Máx pérdida: $900`,
+        '? Permitir que UNA operación baje más del límite'
       ] : [
-        `✅ Balance $${account.size.toLocaleString()} (sin profit) → Máx pérdida: $${mae30Percent}`,
-        `✅ Balance $${(account.size + 4000).toLocaleString()} (profit $4K) → Máx pérdida: $${Math.round(4000 * 0.3)} (30%)`,
-        `✅ Balance $${(account.size + (account.drawdown + 100) * 2).toLocaleString()}+ (profit $${((account.drawdown + 100) * 2).toLocaleString()}+) → Máx pérdida: $${Math.round(((account.drawdown + 100) * 2) * 0.5)} (50%)`,
-        '❌ Permitir que UNA operación baje más del límite',
-        '💡 Si llegas a 32% y cierras rápido = OK, no es penalización'
+        `? Balance $${account.size.toLocaleString()} (sin profit) ? Máx pérdida: $${mae30Percent}`,
+        `? Balance $${(account.size + 4000).toLocaleString()} (profit $4K) ? Máx pérdida: $${Math.round(4000 * 0.3)} (30%)`,
+        `? Balance $${(account.size + (account.drawdown + 100) * 2).toLocaleString()}+ (profit $${((account.drawdown + 100) * 2).toLocaleString()}+) ? Máx pérdida: $${Math.round(((account.drawdown + 100) * 2) * 0.5)} (50%)`,
+        '? Permitir que UNA operación baje más del límite',
+        '?? Si llegas a 32% y cierras rápido = OK, no es penalización'
       ]
     },
     {
       id: 'risk-reward',
-      title: '⚖️ Ratio Riesgo-Recompensa 5:1',
+      title: '?? Ratio Riesgo-Recompensa 5:1',
       icon: <DollarSign className="w-6 h-6" />,
       color: 'bg-green-500',
       summary: 'Stop loss máximo: 5 veces tu objetivo de ganancia',
       details: {
         rule: 'Por cada dólar que buscas ganar, no puedes arriesgar más de $5',
-        calculation: 'Si tu objetivo es $100 → Stop loss máximo $500',
-        ticks: 'Si buscas 10 ticks de ganancia → Stop loss máximo 50 ticks',
+        calculation: 'Si tu objetivo es $100 ? Stop loss máximo $500',
+        ticks: 'Si buscas 10 ticks de ganancia ? Stop loss máximo 50 ticks',
         mental: 'Stops mentales están permitidos (excepto si estás en probation)',
         trailing: 'Puedes mover stops hacia adelante (proteger profit), nunca hacia atrás'
       },
       examples: [
-        '✅ Target: $200 | Stop: $800 (ratio 4:1)',
-        '✅ Target: 20 ticks | Stop: 80 ticks (ratio 4:1)',
-        '❌ Target: $100 | Stop: $1,000 (ratio 10:1)',
-        '❌ Target: 5 ticks | Stop: 150 ticks (ratio 30:1)'
+        '? Target: $200 | Stop: $800 (ratio 4:1)',
+        '? Target: 20 ticks | Stop: 80 ticks (ratio 4:1)',
+        '? Target: $100 | Stop: $1,000 (ratio 10:1)',
+        '? Target: 5 ticks | Stop: 150 ticks (ratio 30:1)'
       ]
     },
     {
       id: 'consistency',
-      title: '📈 Regla Consistencia 30% (Windfall)',
+      title: '?? Regla Consistencia 30% (Windfall)',
       icon: <AlertCircle className="w-6 h-6" />,
       color: 'bg-yellow-500',
       summary: 'Ningún día puede representar más del 30% del profit total',
@@ -348,16 +348,16 @@ const Apex100KRules = () => {
         period: 'Se mide desde el último payout aprobado (o inicio si es primer payout)'
       },
       examples: [
-        '📊 Día más alto: $1,500 → Necesitas $5,000 profit total',
-        '📊 Día más alto: $2,000 → Necesitas $6,667 profit total',
-        '🧮 Fórmula: $1,500 ÷ 0.3 = $5,000 mínimo',
-        '✅ Si tu profit total es $6,000 y mejor día fue $1,500 = OK',
-        '❌ Si tu profit total es $4,000 y mejor día fue $1,500 = NO elegible'
+        '?? Día más alto: $1,500 ? Necesitas $5,000 profit total',
+        '?? Día más alto: $2,000 ? Necesitas $6,667 profit total',
+        '?? Fórmula: $1,500 ÷ 0.3 = $5,000 mínimo',
+        '? Si tu profit total es $6,000 y mejor día fue $1,500 = OK',
+        '? Si tu profit total es $4,000 y mejor día fue $1,500 = NO elegible'
       ]
     },
     {
       id: 'hedging',
-      title: '🚫 Prohibido Hedging',
+      title: '?? Prohibido Hedging',
       icon: <AlertCircle className="w-6 h-6" />,
       color: 'bg-purple-500',
       summary: 'Solo una dirección a la vez - No Long y Short simultáneos',
@@ -369,16 +369,16 @@ const Apex100KRules = () => {
         news: 'Durante eventos de noticias: solo una dirección permitida'
       },
       examples: [
-        '✅ Solo Long en ES',
-        '✅ Solo Short en NQ',
-        '❌ Long ES + Short YM (correlacionados)',
-        '❌ Long en minis + Short en micros',
-        '❌ Long NQ + Short ES'
+        '? Solo Long en ES',
+        '? Solo Short en NQ',
+        '? Long ES + Short YM (correlacionados)',
+        '? Long en minis + Short en micros',
+        '? Long NQ + Short ES'
       ]
     },
     {
       id: 'safety-net',
-      title: '🛡️ Safety Net (Primeros 3 Payouts)',
+      title: '??? Safety Net (Primeros 3 Payouts)',
       icon: <Shield className="w-6 h-6" />,
       color: 'bg-indigo-500',
       summary: `Mantén balance mínimo de $${account.safetyNet.toLocaleString()} para payouts`,
@@ -390,17 +390,17 @@ const Apex100KRules = () => {
         expires: 'Después del 3er payout aprobado, esta regla desaparece'
       },
       examples: [
-        `✅ Balance $${account.safetyNet.toLocaleString()} → Puedes retirar $500 (queda $${(account.safetyNet - 500).toLocaleString()})`,
-        `✅ Balance $${(account.safetyNet + 700).toLocaleString()} → Puedes retirar $1,200`,
-        '   └─ Cálculo: $500 base + $700 extra = $1,200',
-        `   └─ Necesitas: $${account.safetyNet.toLocaleString()} + $700 = $${(account.safetyNet + 700).toLocaleString()}`,
-        `❌ Balance $${(account.safetyNet - 100).toLocaleString()} → NO puedes solicitar payout`,
-        '💡 Payout 4 en adelante: Sin safety net!'
+        `? Balance $${account.safetyNet.toLocaleString()} ? Puedes retirar $500 (queda $${(account.safetyNet - 500).toLocaleString()})`,
+        `? Balance $${(account.safetyNet + 700).toLocaleString()} ? Puedes retirar $1,200`,
+        '   +- Cálculo: $500 base + $700 extra = $1,200',
+        `   +- Necesitas: $${account.safetyNet.toLocaleString()} + $700 = $${(account.safetyNet + 700).toLocaleString()}`,
+        `? Balance $${(account.safetyNet - 100).toLocaleString()} ? NO puedes solicitar payout`,
+        '?? Payout 4 en adelante: Sin safety net!'
       ]
     },
     {
       id: 'max-contracts',
-      title: '🔢 Límite Máximo de Contratos',
+      title: '?? Límite Máximo de Contratos',
       icon: <TrendingUp className="w-6 h-6" />,
       color: 'bg-cyan-500',
       summary: `No exceder los ${account.maxContracts} contratos totales`,
@@ -411,15 +411,15 @@ const Apex100KRules = () => {
         violation: 'Violación = Descalificación de payout + Remoción de ganancias'
       },
       examples: [
-        `✅ ${account.maxContracts} contratos en ES`,
-        `✅ ${Math.floor(account.maxContracts * 0.6)} contratos en NQ`,
-        `❌ ${Math.floor(account.maxContracts * 0.7)} en ES + ${Math.floor(account.maxContracts * 0.7)} en YM = ${Math.floor(account.maxContracts * 1.4)} total`,
-        '❌ Abusar de micros para exceder límite'
+        `? ${account.maxContracts} contratos en ES`,
+        `? ${Math.floor(account.maxContracts * 0.6)} contratos en NQ`,
+        `? ${Math.floor(account.maxContracts * 0.7)} en ES + ${Math.floor(account.maxContracts * 0.7)} en YM = ${Math.floor(account.maxContracts * 1.4)} total`,
+        '? Abusar de micros para exceder límite'
       ]
     },
     {
       id: 'contract-consistency',
-      title: '📏 Consistencia de Tamaño de Contratos',
+      title: '?? Consistencia de Tamaño de Contratos',
       icon: <TrendingUp className="w-6 h-6" />,
       color: 'bg-orange-500',
       summary: 'Mantén tamaños consistentes - No manipules',
@@ -431,10 +431,79 @@ const Apex100KRules = () => {
         proof: 'Podrías necesitar 8 días de trading consistente para probar estabilidad'
       },
       examples: [
-        '✅ Empiezas con 2 contratos, escalas a 4-6 con crecimiento',
-        '✅ Después de retiro, reduces de 8 a 4 contratos',
-        `❌ Día 1-2: ${account.maxContracts} contratos | Día 3-8: 2 contratos`,
-        '❌ "Ir all-in" al inicio, luego reducir drásticamente'
+        '? Empiezas con 2 contratos, escalas a 4-6 con crecimiento',
+        '? Después de retiro, reduces de 8 a 4 contratos',
+        `? Día 1-2: ${account.maxContracts} contratos | Día 3-8: 2 contratos`,
+        '? "Ir all-in" al inicio, luego reducir drásticamente'
+      ]
+    },
+    {
+      id: 'payout-requirements',
+      title: '?? Requisitos para Solicitar Payout',
+      icon: <DollarSign className="w-6 h-6" />,
+      color: 'bg-emerald-500',
+      summary: 'Condiciones que debes cumplir antes de retirar',
+      details: {
+        minDays: '8 días de trading completados desde último payout (o inicio)',
+        profitableDays: '5 de esos 8 días con profit de $50 o más',
+        minBalance: `Balance mínimo: ${account.safetyNet.toLocaleString()} (primeros 3 payouts)`,
+        minAmount: `Monto mínimo: ${account.minPayout}`,
+        maxAmount: `Monto máximo: ${account.maxPayoutFirst5.toLocaleString()} (primeros 5 payouts)`,
+        consistency30: 'Cumplir regla 30% Consistencia (primeros 5 payouts)',
+        postRequest: 'Después de solicitar: Puedes seguir trading INMEDIATAMENTE'
+      },
+      examples: [
+        `? 8 días, 5 con $50+, balance ${account.safetyNet.toLocaleString()}+ = Elegible`,
+        `? Solicitas ${account.minPayout} y sigues trading sin esperar aprobación`,
+        `? Solo 7 días completados = Solicitud NO verificada`,
+        `? Balance cae bajo ${account.safetyNet.toLocaleString()} después de solicitar = Payout DENEGADO`
+      ]
+    },
+    {
+      id: 'post-payout-trading',
+      title: '?? Trading Después de Solicitar Payout',
+      icon: <AlertCircle className="w-6 h-6" />,
+      color: 'bg-blue-600',
+      summary: 'Reglas críticas después de solicitar retiro',
+      details: {
+        canTrade: 'Puedes seguir trading INMEDIATAMENTE - No necesitas esperar aprobación',
+        critical: 'Opera como si el dinero YA fue retirado de tu balance',
+        minBalance: `Si tu balance cae bajo ${account.safetyNet.toLocaleString()} después de solicitar = PAYOUT DENEGADO`,
+        noCancel: 'No necesitas cancelar/editar - Se denegará automáticamente si no cumples',
+        conservative: 'Recomendación: Opera conservadoramente o toma break hasta aprobación'
+      },
+      examples: [
+        `Balance ${(account.safetyNet + 1000).toLocaleString()}, solicitas ${account.minPayout} ? Puedes seguir trading`,
+        `?? Después de solicitar, balance baja a ${(account.safetyNet - 200).toLocaleString()} ? Payout DENEGADO`,
+        '? Opera como si ya tuvieras $500 menos en cuenta',
+        `? Balance ${account.safetyNet.toLocaleString()}, solicitas ${account.minPayout}, caes a ${(account.safetyNet - 100).toLocaleString()} = Denegado`
+      ]
+    },
+    {
+      id: 'prohibited-activities',
+      title: '?? Actividades Estrictamente Prohibidas',
+      icon: <AlertCircle className="w-6 h-6" />,
+      color: 'bg-red-600',
+      summary: 'Violación = Cierre de cuenta y pérdida de fondos',
+      details: {
+        noRiskManagement: 'Trading sin stop losses o risk management definido',
+        hft: 'High Frequency Trading (HFT) - Manipulación del entorno simulado',
+        automation: 'Bots completamente automatizados, AI, algoritmos full-auto',
+        thresholdAsStop: 'Usar el Trailing Threshold como stop loss',
+        copyTrading: 'Copy trading, trade mirroring, sistemas automatizados de terceros',
+        sharing: 'Compartir MAC address, IPs, computadoras, tarjetas de crédito',
+        multipleUsers: 'Permitir que otra persona opere tu cuenta',
+        accountSharing: 'Crear múltiples user accounts (bannable offense)',
+        stockpiling: 'Comprar múltiples cuentas de evaluación con descuento para "quemar"'
+      },
+      examples: [
+        '? Usar bot 24/7 que opera solo',
+        '? HFT o explotar el entorno de simulación',
+        '? Dejar que amigo opere tu cuenta',
+        '? Compartir IP/MAC con otro trader',
+        '? Trading sin stops definidos',
+        '? Crear 2+ user accounts diferentes',
+        '?? Violación = Cuenta cerrada + Pérdida de todos los fondos'
       ]
     }
   ], [selectedAccount, account, halfContracts, mae30Percent]);
@@ -442,7 +511,7 @@ const Apex100KRules = () => {
   const liveRules = [
     {
       id: 'invitation',
-      title: '📨 Invitación a Live Prop',
+      title: '?? Invitación a Live Prop',
       icon: <Award className="w-6 h-6" />,
       color: 'bg-purple-600',
       summary: 'Solo por invitación de Apex',
@@ -455,7 +524,7 @@ const Apex100KRules = () => {
     },
     {
       id: 'payout4-freedom',
-      title: '🎯 Payout 4: Eliminación Safety Net',
+      title: '?? Payout 4: Eliminación Safety Net',
       icon: <CheckCircle className="w-6 h-6" />,
       color: 'bg-green-600',
       summary: `Ya no necesitas mantener $${account.safetyNet.toLocaleString()}`,
@@ -468,7 +537,7 @@ const Apex100KRules = () => {
     },
     {
       id: 'full-contracts',
-      title: '🚀 Contratos Completos Permanentes',
+      title: '?? Contratos Completos Permanentes',
       icon: <TrendingUp className="w-6 h-6" />,
       color: 'bg-blue-600',
       summary: `Ya tienes ${account.maxContracts} contratos desbloqueados desde Safety Net`,
@@ -481,25 +550,25 @@ const Apex100KRules = () => {
     },
     {
       id: 'enhanced-mae',
-      title: '⚡ MAE Mejorado (50%)',
+      title: '? MAE Mejorado (50%)',
       icon: <Shield className="w-6 h-6" />,
       color: 'bg-indigo-600',
       summary: 'Límite de pérdida aumenta con tu crecimiento',
       details: {
         threshold: `Si tu profit duplica el safety net (${((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2).toLocaleString()}+), límite aumenta a 50%`,
-        calculation: 'Con profit duplicado → Máx pérdida: 50% del profit',
-        example: `Balance ${(account.size + (account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2).toLocaleString()} → Máx pérdida ${Math.round(((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2) * 0.5).toLocaleString()} (50%)`,
+        calculation: 'Con profit duplicado ? Máx pérdida: 50% del profit',
+        example: `Balance ${(account.size + (account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2).toLocaleString()} ? Máx pérdida ${Math.round(((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2) * 0.5).toLocaleString()} (50%)`,
         scaling: 'A medida que creces, tu margen de riesgo crece proporcionalmente'
       },
       examples: [
-        `Profit ${(account.drawdown + (account.type === 'STATIC' ? 2000 : 100)).toLocaleString()}-${((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2 - 1).toLocaleString()} → Límite 30%`,
-        `Profit ${((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2).toLocaleString()}+ → Límite 50%`,
-        `Balance ${(account.size + 10000).toLocaleString()} (profit $10K) → Máx pérdida $5,000`
+        `Profit ${(account.drawdown + (account.type === 'STATIC' ? 2000 : 100)).toLocaleString()}-${((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2 - 1).toLocaleString()} ? Límite 30%`,
+        `Profit ${((account.drawdown + (account.type === 'STATIC' ? 2000 : 100)) * 2).toLocaleString()}+ ? Límite 50%`,
+        `Balance ${(account.size + 10000).toLocaleString()} (profit $10K) ? Máx pérdida $5,000`
       ]
     },
     {
       id: 'payout6-consistency',
-      title: '🎊 Payout 6: Sin Regla 30% Consistencia',
+      title: '?? Payout 6: Sin Regla 30% Consistencia',
       icon: <CheckCircle className="w-6 h-6" />,
       color: 'bg-yellow-600',
       summary: 'Eliminación de restricción de windfall',
@@ -512,7 +581,7 @@ const Apex100KRules = () => {
     },
     {
       id: 'payout6-unlimited',
-      title: '♾️ Payout 6: Sin Límite Máximo',
+      title: '?? Payout 6: Sin Límite Máximo',
       icon: <DollarSign className="w-6 h-6" />,
       color: 'bg-green-700',
       summary: `Ya no hay tope de ${account.maxPayoutFirst5.toLocaleString()} por payout`,
@@ -523,15 +592,15 @@ const Apex100KRules = () => {
         amounts: 'Retira la cantidad que necesites (respetando balance mínimo)'
       },
       examples: [
-        '✅ Puedes retirar $5,000',
-        '✅ Puedes retirar $10,000',
-        '✅ Puedes retirar $15,000+',
-        '⚠️ Solo mantén balance suficiente después del retiro'
+        '? Puedes retirar $5,000',
+        '? Puedes retirar $10,000',
+        '? Puedes retirar $15,000+',
+        '?? Solo mantén balance suficiente después del retiro'
       ]
     },
     {
       id: 'payout-split',
-      title: '💰 División de Payouts',
+      title: '?? División de Payouts',
       icon: <DollarSign className="w-6 h-6" />,
       color: 'bg-emerald-600',
       summary: '100% de primeros $25K, luego 90%',
@@ -544,7 +613,7 @@ const Apex100KRules = () => {
     },
     {
       id: 'timeline',
-      title: '⏱️ Timeline de Progresión',
+      title: '?? Timeline de Progresión',
       icon: <Calendar className="w-6 h-6" />,
       color: 'bg-pink-600',
       summary: 'Ruta de progresión completa',
@@ -595,16 +664,16 @@ const Apex100KRules = () => {
               
               {rule.examples && (
                 <div className="mt-4">
-                  <p className="font-semibold text-sm mb-2">📝 Ejemplos:</p>
+                  <p className="font-semibold text-sm mb-2">?? Ejemplos:</p>
                   <div className="space-y-1">
                     {rule.examples.map((example, idx) => (
                       <div 
                         key={idx} 
                         className={`text-sm p-2 rounded ${
-                          example.startsWith('✅') ? 'bg-green-50 text-green-800' : 
-                          example.startsWith('❌') ? 'bg-red-50 text-red-800' : 
-                          example.startsWith('💡') || example.startsWith('⚠️') ? 'bg-yellow-50 text-yellow-800' :
-                          example.startsWith('📊') || example.startsWith('🧮') ? 'bg-blue-50 text-blue-800' :
+                          example.startsWith('?') ? 'bg-green-50 text-green-800' : 
+                          example.startsWith('?') ? 'bg-red-50 text-red-800' : 
+                          example.startsWith('??') || example.startsWith('??') ? 'bg-yellow-50 text-yellow-800' :
+                          example.startsWith('??') || example.startsWith('??') ? 'bg-blue-50 text-blue-800' :
                           'bg-gray-50 text-gray-800'
                         }`}
                       >
@@ -678,7 +747,7 @@ const Apex100KRules = () => {
           
           {account.type === 'STATIC' && (
             <div className="mt-4 bg-amber-50 border-l-4 border-amber-500 p-3 rounded">
-              <p className="text-sm font-semibold text-amber-800">⚠️ Cuenta STATIC</p>
+              <p className="text-sm font-semibold text-amber-800">?? Cuenta STATIC</p>
               <p className="text-xs text-amber-700">Drawdown fijo que NO se mueve con el balance</p>
             </div>
           )}
@@ -726,7 +795,7 @@ const Apex100KRules = () => {
           {activePhase === 'eval' && (
             <>
               <div className="bg-blue-500 text-white p-4 rounded-lg mb-4">
-                <h2 className="text-xl font-bold mb-2">🎓 Fase 1: Evaluation Account</h2>
+                <h2 className="text-xl font-bold mb-2">?? Fase 1: Evaluation Account</h2>
                 <p className="text-sm opacity-90">
                   Fase de prueba - Solo regla de {account.type === 'STATIC' ? 'drawdown fijo' : 'trailing drawdown'}, sin restricciones de consistencia
                 </p>
@@ -734,7 +803,7 @@ const Apex100KRules = () => {
               {evaluationRules.map(rule => <RuleCard key={rule.id} rule={rule} />)}
               
               <div className="bg-green-100 border-l-4 border-green-500 p-4 rounded">
-                <p className="font-bold text-green-800 mb-2">✅ Ventaja de Evaluation:</p>
+                <p className="font-bold text-green-800 mb-2">? Ventaja de Evaluation:</p>
                 <p className="text-sm text-green-700">
                   Usa estrategias agresivas si quieres - no hay límites de contratos, consistencia, o P&L negativo.
                   Solo no toques el drawdown. Una vez que pasas, prepárate para las reglas de PA.
@@ -746,7 +815,7 @@ const Apex100KRules = () => {
           {activePhase === 'pa' && (
             <>
               <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-4 rounded-lg mb-4">
-                <h2 className="text-xl font-bold mb-2">📍 Fase 2: Performance Account (PA)</h2>
+                <h2 className="text-xl font-bold mb-2">?? Fase 2: Performance Account (PA)</h2>
                 <p className="text-sm opacity-90">
                   Todas las reglas de consistencia activas - Trading disciplinado y profesional requerido
                 </p>
@@ -754,7 +823,7 @@ const Apex100KRules = () => {
               {paRules.map(rule => <RuleCard key={rule.id} rule={rule} />)}
               
               <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded">
-                <p className="font-bold text-yellow-800 mb-2">⚠️ Importante:</p>
+                <p className="font-bold text-yellow-800 mb-2">?? Importante:</p>
                 <ul className="text-sm text-yellow-700 space-y-1">
                   <li>• Si no cumples los 8 días de trading, tu solicitud NO se verifica</li>
                   <li>• Necesitas 5 días con $50+ profit de esos 8 días</li>
@@ -767,7 +836,7 @@ const Apex100KRules = () => {
           {activePhase === 'live' && (
             <>
               <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-4 rounded-lg mb-4">
-                <h2 className="text-xl font-bold mb-2">🏆 Fase 3: Live Prop Account</h2>
+                <h2 className="text-xl font-bold mb-2">?? Fase 3: Live Prop Account</h2>
                 <p className="text-sm opacity-90">
                   Eliminación progresiva de restricciones - Beneficios desbloqueados gradualmente
                 </p>
@@ -775,7 +844,7 @@ const Apex100KRules = () => {
               {liveRules.map(rule => <RuleCard key={rule.id} rule={rule} />)}
               
               <div className="bg-purple-100 border-l-4 border-purple-500 p-4 rounded">
-                <p className="font-bold text-purple-800 mb-2">🎯 Timeline de Beneficios:</p>
+                <p className="font-bold text-purple-800 mb-2">?? Timeline de Beneficios:</p>
                 <div className="text-sm text-purple-700 space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs font-bold">Payout 4</span>
@@ -797,7 +866,7 @@ const Apex100KRules = () => {
 
         {/* Quick Reference */}
         <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl shadow-lg p-6 mt-6">
-          <h3 className="text-xl font-bold mb-3">📚 Referencia Rápida - {selectedAccount.toUpperCase()}</h3>
+          <h3 className="text-xl font-bold mb-3">?? Referencia Rápida - {selectedAccount.toUpperCase()}</h3>
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             <div>
               <p className="font-bold mb-2 opacity-90">Fase 1: Evaluation</p>
@@ -843,4 +912,3 @@ const Apex100KRules = () => {
 
 
 export default Apex100KRules;
-
