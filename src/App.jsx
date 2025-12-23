@@ -236,6 +236,56 @@ const Apex100KRules = () => {
 
   const paRules = useMemo(() => [
     {
+      id: 'eval-trailing',
+      title: '📉 Trailing Drawdown',
+      icon: <Shield className="w-6 h-6" />,
+      color: 'bg-blue-500',
+      summary: `${account.type === 'STATIC' ? 'Drawdown fijo' : 'Drawdown móvil'} - Regla principal en Evaluación`,
+      details: account.type === 'STATIC' ? {
+        fixed: `Drawdown FIJO en $${(account.size - account.drawdown).toLocaleString()}`,
+        noMovement: 'El drawdown NO se mueve - permanece en el mismo nivel',
+        liquidation: 'Si tu balance toca este nivel, la cuenta se liquida',
+        monitoring: 'Monitorea constantemente en RTrader/Tradovate dashboard'
+      } : {
+        starts: `Comienza en $${trailingStart.toLocaleString()} (Balance inicial - $${account.drawdown.toLocaleString()} drawdown)`,
+        moves: 'Se mueve hacia arriba siguiendo tu balance máximo (high watermark)',
+        liveValue: 'Basado en el valor LIVE más alto durante trades, NO en trades cerrados',
+        stops: `Se detiene cuando alcanzas $${account.safetyNet.toLocaleString()} (Safety Net = $${account.size.toLocaleString()} + $${account.drawdown.toLocaleString()} + $100)`,
+        liquidation: 'Si tu balance toca el trailing drawdown, la cuenta se liquida',
+        monitoring: 'Monitorea constantemente en RTrader/Tradovate dashboard'
+      },
+      examples: account.type === 'STATIC' ? [
+        `✅ Balance $${account.size.toLocaleString()} → Drawdown FIJO en $${(account.size - account.drawdown).toLocaleString()}`,
+        `✅ Balance sube a $${(account.size + 2000).toLocaleString()} → Drawdown sigue en $${(account.size - account.drawdown).toLocaleString()}`,
+        `❌ Balance toca $${(account.size - account.drawdown).toLocaleString()} = Cuenta liquidada`
+      ] : [
+        `✅ Balance $${account.size.toLocaleString()} → Trailing en $${trailingStart.toLocaleString()}`,
+        `✅ Trade peak $${(account.size + 2000).toLocaleString()}, cierras en $${(account.size + 1500).toLocaleString()} → Trailing en $${(account.size + 2000 - account.drawdown).toLocaleString()} (sigue el peak)`,
+        `✅ Balance llega a $${account.safetyNet.toLocaleString()}+ → Trailing se fija permanentemente en $${(account.size + 100).toLocaleString()}`,
+        `❌ Balance toca el trailing = Cuenta liquidada inmediatamente`
+      ]
+    },
+    {
+      id: 'eval-close-time',
+      title: '⏰ Cierre de Operaciones',
+      icon: <AlertCircle className="w-6 h-6" />,
+      color: 'bg-red-500',
+      summary: 'Todas las operaciones deben cerrarse antes de 4:59 PM ET',
+      details: {
+        deadline: 'Cierra todas las operaciones y cancela órdenes pendientes antes de 4:59 PM ET',
+        autoClose: 'Apex cierra posiciones automáticamente a las 4:59 PM, pero NO confíes en esto',
+        manual: 'Debes cancelar manualmente órdenes que NO estén attached a posiciones',
+        risk: 'Dejar operaciones abiertas puede causar gaps que liquiden tu cuenta',
+        holidays: 'En días festivos con cierre temprano, cierra a la hora correspondiente del mercado'
+      },
+      examples: [
+        '✅ Cierras todas las posiciones a las 4:30 PM ET',
+        '❌ Confiar en el auto-close como estrategia principal',
+        '❌ Dejar órdenes pendientes sin attached position',
+        '⚠️ Día festivo con cierre 1:00 PM → Cierra a esa hora'
+      ]
+    },
+    {
       id: 'trading-days',
       title: '📅 Días de Trading Requeridos',
       icon: <Calendar className="w-6 h-6" />,
@@ -288,7 +338,7 @@ const Apex100KRules = () => {
       title: '⚠️ Regla 30% P&L Negativo (MAE)',
       icon: <Shield className="w-6 h-6" />,
       color: 'bg-red-500',
-      summary: 'Pérdida máxima por operación: 30% del profit',
+      summary: 'Pérdida máxima por operación: 30% del profit FLOTANTE',
       details: account.type === 'STATIC' ? {
         belowSafetyNet: `Debajo de $${account.safetyNet.toLocaleString()}: Máx pérdida $${Math.round(account.drawdown * 0.3)} (30% de $${account.drawdown})`,
         aboveSafetyNet: 'Arriba del Safety Net: 30% del profit actual en la cuenta',
@@ -484,26 +534,28 @@ const Apex100KRules = () => {
       title: '🚫 Actividades Estrictamente Prohibidas',
       icon: <AlertCircle className="w-6 h-6" />,
       color: 'bg-red-600',
-      summary: 'Violación = Cierre de cuenta y pérdida de fondos',
+      summary: 'Cualquier violación resulta en cierre inmediato de la cuenta y pérdida total de fondos',
       details: {
-        noRiskManagement: 'Trading sin stop losses o risk management definido',
-        hft: 'High Frequency Trading (HFT) - Manipulación del entorno simulado',
-        automation: 'Bots completamente automatizados, AI, algoritmos full-auto',
-        thresholdAsStop: 'Usar el Trailing Threshold como stop loss',
-        copyTrading: 'Copy trading, trade mirroring, sistemas automatizados de terceros',
-        sharing: 'Compartir MAC address, IPs, computadoras, tarjetas de crédito',
-        multipleUsers: 'Permitir que otra persona opere tu cuenta',
-        accountSharing: 'Crear múltiples user accounts (bannable offense)',
-        stockpiling: 'Comprar múltiples cuentas de evaluación con descuento para "quemar"'
+        noRiskManagement: 'Operar sin stop loss definido o sin un plan claro de gestión de riesgo',
+        hft: 'High Frequency Trading (HFT) o cualquier intento de explotar/manipular el entorno simulado',
+        automation: 'Uso de bots, algoritmos, IA o sistemas totalmente automatizados (full-auto)',
+        thresholdAsStop: 'Utilizar el Trailing Threshold / Trailing Drawdown como sustituto del stop loss',
+        unsustainableStrategies: 'Estrategias de trading o gestión de riesgo que no demuestren crecimiento consistente, sostenibilidad en el tiempo o control adecuado del riesgo.',
+        DeviatingfromProfessionalStandards: 'Los traders deben implementar estrategias y tecnicas de gestión de riesgo consistentes con las usadas una cuenta personal de un broker regulado',
+        copyTrading: 'Copy trading, trade mirroring o uso de sistemas automatizados de terceros',
+        sharing: 'Compartir o reutilizar IP, MAC address, computadoras o tarjetas de crédito',
+        multipleUsers: 'Permitir que otra persona opere o tenga acceso a tu cuenta',
+        accountSharing: 'Crear o utilizar múltiples user accounts (infracción grave y baneable)',
+        stockpiling: 'Comprar múltiples cuentas de evaluación con descuento con fines de “quemarlas”'
       },
       examples: [
-        '❌ Usar bot 24/7 que opera solo',
-        '❌ HFT o explotar el entorno de simulación',
-        '❌ Dejar que amigo opere tu cuenta',
-        '❌ Compartir IP/MAC con otro trader',
-        '❌ Trading sin stops definidos',
-        '❌ Crear 2+ user accounts diferentes',
-        '⚠️ Violación = Cuenta cerrada + Pérdida de todos los fondos'
+        '❌ Ejecutar un bot que opere de forma autónoma',
+        '❌ Practicar HFT o explotar latencias del simulador',
+        '❌ Permitir que un tercero opere tu cuenta',
+        '❌ Compartir IP, MAC o dispositivos con otro trader',
+        '❌ Operar sin stop loss ni control de riesgo',
+        '❌ Crear o usar múltiples cuentas de usuario',
+        '⚠️ Resultado: cierre de cuenta + pérdida total de fondos'
       ]
     }
   ], [selectedAccount, account, halfContracts, mae30Percent]);
@@ -912,3 +964,4 @@ const Apex100KRules = () => {
 
 
 export default Apex100KRules;
+
